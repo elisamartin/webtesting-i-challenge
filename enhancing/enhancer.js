@@ -23,7 +23,22 @@ function succeed(item) {
 // a fail(item) method that accepts an item object and returns a new item object modified according to the rules
 //defined by the client for enhancement failure.
 function fail(item) {
-	return { ...item };
+	if (typeof item.name !== 'string' || typeof item.durability !== 'number' || typeof item.enhancement !== 'number') {
+		throw new Error('Information is not correct');
+	}
+
+	let newItem = item;
+
+	if (newItem.enhancement < 15) {
+		newItem.durability -= 5;
+	} else {
+		newItem.durability -= 10;
+		if (newItem.durability < 0) newItem.durability = 0;
+		if (newItem.enhancement > 16) {
+			newItem.enhancement--;
+		}
+	}
+	return newItem;
 }
 
 // a repair(item) method that accepts an item object and returns a new item with the durability restored to 100.
