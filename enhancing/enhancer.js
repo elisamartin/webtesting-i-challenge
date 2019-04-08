@@ -8,7 +8,16 @@ module.exports = {
 // a success(item) method that accepts an item object and returns a new item object modified according to the rules
 //defined by the client for enhancement success.
 function succeed(item) {
-	return { ...item };
+	if (typeof item.name !== 'string' || typeof item.durability !== 'number' || typeof item.enhancement !== 'number') {
+		throw new Error('Information is not correct');
+	}
+	if (item.enhancement === 20) {
+		throw new Error('Enhancement is at maximum level');
+	}
+
+	let newItem = item;
+	newItem.enhancement++;
+	return newItem;
 }
 
 // a fail(item) method that accepts an item object and returns a new item object modified according to the rules
